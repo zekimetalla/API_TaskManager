@@ -42,10 +42,6 @@ namespace TaskManagerApp.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
-                    b.Property<string>("Secret")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

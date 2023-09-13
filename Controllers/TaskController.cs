@@ -16,6 +16,7 @@ namespace TaskManagerApp.Controllers
         [HttpGet]
         public async Task <IEnumerable<Models.Task>> Get()
             => await _context.Tasks.ToListAsync();
+
         [HttpGet("id")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -30,6 +31,20 @@ namespace TaskManagerApp.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetById), new {id = task.Id}, task);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var issueToDelete = await _context.Tasks.FindAsync(id);
+            if (issueToDelete == null) return NotFound();
+
+            _context.Tasks.Remove(issueToDelete);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
     }
